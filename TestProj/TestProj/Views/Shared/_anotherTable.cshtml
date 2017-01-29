@@ -1,0 +1,114 @@
+﻿@model PagedList.IPagedList<TestProj.Models.AnotherDataModel>
+
+<input type="hidden" id="pageNumber" name="page" value="@Model.PageNumber" />
+<a href="/Home/DeleteAnotherList/" id="btn-del" class="btn btn-sm btn-danger">Удалить</a>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>
+                    <label class="label-checkbox inline">
+                        <input type="checkbox" id="chk-all">
+                        <span class="custom-checkbox"></span>
+                    </label>
+                </td>
+                <td>№</td>
+                <td>Дата / Время</td>
+                <td>№ Заказа</td>
+                <td>URL домена</td>
+                <td>Покупатель</td>
+                <td>Сумма</td>
+                <td>Статус</td>
+                <td>Метод</td>
+                <td>Компания</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var elem in Model)
+                {
+                <tr>
+                    <td>
+                        <label class="label-checkbox">
+                            <input type="checkbox" name="del" class="chk" value="@elem.Id">
+                            <span class="custom-checkbox"></span>
+                        </label>
+                    </td>
+                    <td>@elem.Id</td>
+                    <td>@elem.DateAndTime</td>
+                    <td>@elem.OrderId</td>
+                    <td>@elem.DomenUrl</td>
+                    <td>@elem.CustomerName</td>
+                    <td>@elem.TotalCost</td>
+                    <td>@elem.Status</td>
+                    <td>@elem.Method</td>
+                    <td>@elem.CompanyName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="pull-right">
+        <div class="pagination">
+            @if (Model.HasPreviousPage)
+            {
+                <a href="/Home/AnotherList/1" class="first" data-action="first">&laquo;</a>
+                <a href="/Home/AnotherList/@(Model.PageNumber-1)" class="previous" data-action="previous">&lsaquo;</a>
+            }
+            else
+            {
+                <a class="first" data-action="first">&laquo;</a>
+                <a class="previous" data-action="previous">&lsaquo;</a>
+            }
+            <span>Страница @Model.PageNumber из @Model.PageCount</span>
+            @if (Model.HasNextPage)
+            {
+                <a href="/Home/AnotherList/@(Model.PageNumber+1)" class="next" data-action="next">&rsaquo;</a>
+                <a href="/Home/AnotherList/@(Model.PageCount)" class="last" data-action="last">&raquo;</a>
+            }
+            else
+            {
+                <a class="next" data-action="first">&rsaquo;</a>
+                <a class="last" data-action="previous">&raquo;</a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>
+                    <label class="label-checkbox inline">
+                        <input type="checkbox" id="chk-all">
+                        <span class="custom-checkbox"></span>
+                    </label>
+                </td>
+                <td>№</td>
+                <td>Дата / Время</td>
+                <td>№ Заказа</td>
+                <td>URL домена</td>
+                <td>Покупатель</td>
+                <td>Сумма</td>
+                <td>Статус</td>
+                <td>Метод</td>
+                <td>Компания</td>
+            </tr>
+        </thead>
+    </table>
+    <div class="text-center">
+        Элементы отсутствуют
+    </div>
+    <div class="pull-right">
+        <div class="pagination">
+            <a class="first" data-action="first">&laquo;</a>
+            <a class="previous" data-action="previous">&lsaquo;</a>
+            <span>Страница 0 из 0</span>
+            <a class="next" data-action="first">&rsaquo;</a>
+            <a class="last" data-action="previous">&raquo;</a>
+
+        </div>
+    </div>
+}
+@Scripts.Render("~/bundles/table")
